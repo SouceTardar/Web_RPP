@@ -11,10 +11,20 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+      
+    - name: Create folder and copy files
+    run: |
+      name=$(bacename ${{ github }})
+      echo $name
+      mkdir $name
+      cp -r ru #name
+      cp -r en $name
+      cp -r index.html $name
+      cp -r $name site
+      
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3 
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./ 
-        destination_dir: ./${{ github.event.release.tag_name }} 
+        publish_dir: ./site
+        keep_files: true
